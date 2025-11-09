@@ -2,27 +2,35 @@ import express from "express";
 import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 
+// Prisma client
 const prisma = new PrismaClient();
+
+// Express app
 const app = express();
 
+// Middlewares
 app.use(cors());
 app.use(express.json());
 
 // Healthcheck
-app.get("/api", (req, res) => res.json({ status: "ok" }));
+app.get("/api", (req, res) => {
+  res.json({ status: "ok" });
+});
 
 // Buscar token
 app.get("/api/token/:id", async (req, res) => {
   try {
-    const token = await prisma.token.findUnique({
-      where: { id: req.params.id }
+    const tokenData = await prisma.token.findUnique({
+      where: { id: req.params.id },
     });
 
-    if (!token) return res.status(404).json({ error: "Token not found" });
+    if (!tokenData) {
+      return res.status(404).json({ error: "Token not found" });
+    }
 
-    res.json(token);
+    res.json(tokenData);
   } catch (err) {
-    console.error(err);
+    console.error("GET /api/token/:id ERROR →", err);
     res.status(500).json({ error: "Server error" });
   }
 });
@@ -37,16 +45,15 @@ app.post("/api/token", async (req, res) => {
     const saved = await prisma.token.upsert({
       where: { id },
       create: { id, states },
-      update: { states }
+      update: { states },
     });
 
     res.json(saved);
   } catch (err) {
-    console.error(err);
+    console.error("POST /api/token ERROR →", err);
     res.status(500).json({ error: "Server error" });
   }
 });
 
-// Porta
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => console.log(`API rodando na porta ${PORT}`));
+// ✅ EXPORT — necessário para Serverless Vercel
+export default app;
