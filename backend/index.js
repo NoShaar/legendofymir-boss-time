@@ -2,13 +2,9 @@ import express from "express";
 import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 
-// Prisma client
 const prisma = new PrismaClient();
-
-// Express app
 const app = express();
 
-// Middlewares
 app.use(cors());
 app.use(express.json());
 
@@ -30,12 +26,12 @@ app.get("/api/token/:id", async (req, res) => {
 
     res.json(tokenData);
   } catch (err) {
-    console.error("GET /api/token/:id ERROR →", err);
+    console.error(err);
     res.status(500).json({ error: "Server error" });
   }
 });
 
-// Salvar / Atualizar token
+// Criar / Atualizar token
 app.post("/api/token", async (req, res) => {
   try {
     const { id, states } = req.body;
@@ -50,10 +46,10 @@ app.post("/api/token", async (req, res) => {
 
     res.json(saved);
   } catch (err) {
-    console.error("POST /api/token ERROR →", err);
+    console.error(err);
     res.status(500).json({ error: "Server error" });
   }
 });
 
-// ✅ EXPORT — necessário para Serverless Vercel
+// ✅ Exportar apenas (sem listen)
 export default app;
