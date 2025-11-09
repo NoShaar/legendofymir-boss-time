@@ -8,12 +8,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Healthcheck
+// health
 app.get("/api", (req, res) => {
   res.json({ status: "ok" });
 });
 
-// Buscar token
+// retrieve token
 app.get("/api/token/:id", async (req, res) => {
   try {
     const tokenData = await prisma.token.findUnique({
@@ -26,12 +26,11 @@ app.get("/api/token/:id", async (req, res) => {
 
     res.json(tokenData);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ error: "Server error" });
   }
 });
 
-// Criar / Atualizar token
+// create/update token
 app.post("/api/token", async (req, res) => {
   try {
     const { id, states } = req.body;
@@ -46,9 +45,9 @@ app.post("/api/token", async (req, res) => {
 
     res.json(saved);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ error: "Server error" });
   }
 });
 
+// required for vercel
 export default app;
