@@ -6,15 +6,15 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "prisma": "prisma"
+    "postinstall": "prisma generate"
   },
   "dependencies": {
-    "cors": "^0.0.0",
-    "express": "^0.0.0",
-    "@prisma/client": "^0.0.0"
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "@prisma/client": "5.16.1"
   },
   "devDependencies": {
-    "prisma": "^0.0.0",
-    "nodemon": "^0.0.0"
+    "prisma": "5.16.1",
+    "nodemon": "^3.1.0"
   }
 }
