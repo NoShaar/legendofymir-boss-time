@@ -81,31 +81,38 @@ const BossCard = ({ category, room, boss, getBossState, toggleBossStatus, token,
           </div>
         </div>
 
-        {!isAlive && (
-          <div className="mb-4 space-y-3">
-            <div className="flex items-center justify-center gap-2 p-3 bg-black/30 rounded-xl">
-              <Clock className="w-5 h-5 text-blue-400" />
-              <span className="font-mono text-2xl font-bold text-white">
-                {String(hours).padStart(2, "0")}:
-                {String(minutes).padStart(2, "0")}:
-                {String(seconds).padStart(2, "0")}
-              </span>
-            </div>
-            <div className="relative">
-              <div className="w-full bg-gray-800 rounded-full h-2.5 overflow-hidden">
-                <motion.div
-                  className="bg-gradient-to-r from-blue-500 to-cyan-400 h-2.5 rounded-full"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${progress}%` }}
-                  transition={{ duration: 0.5 }}
-                />
+        {/* Área de timer com altura fixa */}
+        <div className="mb-4 h-[120px] flex flex-col justify-center">
+          {!isAlive ? (
+            <div className="space-y-3">
+              <div className="flex items-center justify-center gap-2 p-3 bg-black/30 rounded-xl">
+                <Clock className="w-5 h-5 text-blue-400" />
+                <span className="font-mono text-2xl font-bold text-white">
+                  {String(hours).padStart(2, "0")}:
+                  {String(minutes).padStart(2, "0")}:
+                  {String(seconds).padStart(2, "0")}
+                </span>
               </div>
-              <span className="text-xs text-gray-400 mt-1 block text-center">
-                {progress.toFixed(0)}% concluído
-              </span>
+              <div className="relative">
+                <div className="w-full bg-gray-800 rounded-full h-2.5 overflow-hidden">
+                  <motion.div
+                    className="bg-gradient-to-r from-blue-500 to-cyan-400 h-2.5 rounded-full"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${progress}%` }}
+                    transition={{ duration: 0.5 }}
+                  />
+                </div>
+                <span className="text-xs text-gray-400 mt-1 block text-center">
+                  {progress.toFixed(0)}% concluído
+                </span>
+              </div>
             </div>
-          </div>
-        )}
+          ) : (
+            <div className="flex items-center justify-center h-full">
+              <span className="text-gray-500 text-sm">Aguardando eliminação...</span>
+            </div>
+          )}
+        </div>
 
         <button
           onClick={() => toggleBossStatus(category, room, boss)}
