@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "node index.js",
+    "build": "prisma generate",
     "prisma": "prisma"
   },
   "dependencies": {

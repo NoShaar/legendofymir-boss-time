@@ -1,6 +1,8 @@
+// backend/prisma/schema.prisma
+
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL") // Vercel irá preencher isso automaticamente
 }
 
 generator client {
