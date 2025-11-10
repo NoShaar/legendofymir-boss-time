@@ -1,8 +1,17 @@
 {
   "version": 2,
   "builds": [
-    { "src": "backend/index.js", "use": "@vercel/node" },
-    { "src": "frontend/package.json", "use": "@vercel/static-build" }
+    {
+      "src": "backend/package.json",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["prisma/**"]
+      }
+    },
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build"
+    }
   ],
   "routes": [
     {
@@ -10,8 +19,11 @@
       "dest": "backend/index.js"
     },
     {
+      "handle": "filesystem"
+    },
+    {
       "src": "/(.*)",
-      "dest": "frontend/dist/$1"
+      "dest": "/index.html"
     }
   ]
 }
